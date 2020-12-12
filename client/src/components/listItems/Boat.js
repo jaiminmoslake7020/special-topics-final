@@ -55,7 +55,8 @@ const Person = props => {
               <Link target={"_blank"} href={"localhost:3000/person/"+id} title="More Info" />
             </Anchor>,
             <EditOutlined key='edit' onClick={handleButtonClick} />,
-            // <RemovePerson id={id} firstName={} lastName={lastName} />
+            <RemovePerson  id={id}
+                      year={year} make={make} model={model} price={price} personId={personId} />
           ]}
           style={styles.card}
         >
