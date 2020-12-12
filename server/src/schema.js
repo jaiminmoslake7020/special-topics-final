@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-express'
-import { find, remove } from 'lodash'
+import {filter, find, remove} from 'lodash'
 
 const people = [
   {
@@ -95,6 +95,16 @@ const boats = [
 ]
 
 const typeDefs = gql`
+
+  type Boat {
+    id: String!
+    year: String!
+    make: String!
+    model: String!
+    price: String!
+    personId: String!
+  }
+
   type Person {
     id: String!
     firstName: String!
@@ -103,18 +113,37 @@ const typeDefs = gql`
 
   type Query {
     people: [Person]
+    person(id: String!): Person
+    boatsByPerson( personId: String! ):[Boat]
+    boat( id: String! ): Boat
+    boatsList : [Boat]
   }
 
   type Mutation {
     addPerson(id: String!, firstName: String!, lastName: String!): Person
     updatePerson(id: String!, firstName: String!, lastName: String!): Person
     removePerson(id: String!): Person
+    
+    addBoat(id: String!, year: String!, make: String!, model: String!, price: String!, personId: String!): Boat
+    updateBoat(id: String!, year: String!, make: String!, model: String!, price: String!, personId: String!): Boat
+    removeBoat(id: String!): Boat
+    
   }
 `
 
 const resolvers = {
   Query: {
-    people: () => people
+    people: () => people,
+    person : (parent, args, context, info) => {
+      return find(people, { id: args.id })
+    },
+    boatsByPerson : (parent, args, context, info) => {
+      return filter(boats, { personId: args.personId })
+    },
+    boat : (parent, args, context, info) => {
+      return find(boats, { id: args.id })
+    },
+    boatsList : () => boats
   },
   Mutation: {
     addPerson: (root, args) => {
@@ -145,7 +174,45 @@ const resolvers = {
         return a.id === removedPerson.id
       })
       return removedPerson
+    },
+
+
+    addBoat: (root, args) => {
+      const newBoat = {
+        id: args.id,
+        year: args.year,
+        model: args.model,
+        make: args.make,
+        price: args.price,
+        personId: args.personId
+      }
+      boats.push(newBoat)
+      return newBoat
+    },
+    updateBoat: (root, args) => {
+      const boat = find(boats, { id: args.id })
+      if (!boat) {
+        throw new Error(`Couldn't find boat with id ${args.id}`)
+      }
+
+      boat.year = args.year
+      boat.make = args.make
+      boat.model = args.model
+      boat.price = args.price
+      boat.personId = args.personId
+      return boat
+    },
+    removeBoat: (root, args) => {
+      const removedBoat = find(boats, { id: args.id })
+      if (!removedBoat) {
+        throw new Error(`Couldn't find boat with id ${args.id}`)
+      }
+      remove(boats, a => {
+        return a.id === removedBoat.id
+      })
+      return removedBoat
     }
+
   }
 }
 export { typeDefs, resolvers }

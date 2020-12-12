@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, List } from 'antd'
+import {Button, Card, List} from 'antd'
 
 import { EditOutlined } from '@ant-design/icons'
 import UpdatePerson from '../forms/UpdatePerson'
@@ -50,6 +50,7 @@ const Person = props => {
       ) : (
         <Card
           actions={[
+            <AnchorLink href={"localhost:3000/person/"+id} target={"_blank"} title={"More info"} />,
             <EditOutlined key='edit' onClick={handleButtonClick} />,
             <RemovePerson id={id} firstName={firstName} lastName={lastName} />
           ]}
