@@ -32,7 +32,11 @@ const AddBoat = () => {
         addPerson: {
           __typename: 'Boat',
           id,
-          year, make, model, price, personId
+          year,
+          make,
+          model,
+          price,
+          personId
         }
       },
       update: (proxy, { data: { addBoat } }) => {

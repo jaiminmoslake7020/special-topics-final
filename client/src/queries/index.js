@@ -57,7 +57,7 @@ export const GET_BOATS = gql`
 
 
 export const ADD_BOAT = gql`
-  mutation AddBoat($id: String!, $year: String!, $make: String!,  $model: String!, $price: String!,  $presonId: String!) {
+  mutation AddBoat($id: String!, $year: String!, $make: String!,  $model: String!, $price: String!,  $personId: String!) {
     addBoat(id: $id, year: $year, make: $make, model:$model, price:$price, personId:$personId ) {
      id
      year
@@ -69,7 +69,7 @@ export const ADD_BOAT = gql`
 `
 
 export const UPDATE_BOAT = gql`
-  mutation UpdateBoat($id: String!, $year: String!, $make: String!,  $model: String!, $price: String!,  $presonId: String!) {
+  mutation UpdateBoat($id: String!, $year: String!, $make: String!,  $model: String!, $price: String!,  $personId: String!) {
     updateBoat(id: $id, year: $year, make: $make, model:$model, price:$price, personId:$personId ) {
      id
      year
