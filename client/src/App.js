@@ -10,6 +10,7 @@ import AddPerson from './components/forms/AddPerson'
 import './App.css'
 import  People  from './components/lists/People'
 import BoatsByPerson from './components/lists/BoatsByPerson'
+import AddBoat from "./components/forms/AddBoat";
 
 const { Content } = Layout
 
@@ -31,6 +32,7 @@ const App = () => (
                 <Route path="/person/:id/" exact >
                     <Content className='App'>
                         <Title />
+                        <AddBoat/>
                         <BoatsByPerson />
                     </Content>
                 </Route>
