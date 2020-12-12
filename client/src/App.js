@@ -28,7 +28,7 @@ const App = () => (
             renders the first one that matches the current URL. */}
             <Switch>
 
-                <Route path="/person/1/" exact >
+                <Route path="/person/:id/" exact >
                     <Content className='App'>
                         <Title />
                         <BoatsByPerson />

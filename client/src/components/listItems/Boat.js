@@ -14,13 +14,16 @@ const getStyles = () => ({
 
 const Person = props => {
   const [id] = useState(props.id)
-  const [firstName, setFirstName] = useState(props.firstName)
-  const [lastName, setLastName] = useState(props.lastName)
+  const [year, setYear] = useState(props.year)
+  const [make, setMake] = useState(props.make)
+  const [model, setModel] = useState(props.model)
+  const [price, setPrice] = useState(props.price)
+  const [personId, setPersonId] = useState(props.personId)
   const [editMode, setEditMode] = useState(false)
   const styles = getStyles()
 
-  const fullName = () => {
-    return `${props.firstName} ${props.lastName}`
+  const boatDetails = () => {
+    return `${props.year} ${props.make} ${props.model} ${props.price} ${props.personId}`
   }
 
   const updateStateVariable = (variable, value) => {
@@ -43,10 +46,7 @@ const Person = props => {
       {editMode ? (
         <UpdatePerson
           id={id}
-          firstName={firstName}
-          lastName={lastName}
-          onButtonClick={handleButtonClick}
-          updateStateVariable={updateStateVariable}
+          year={year} make={make} model={model} price={price} personId={personId}
         />
       ) : (
         <Card
@@ -55,11 +55,11 @@ const Person = props => {
               <Link target={"_blank"} href={"localhost:3000/person/"+id} title="More Info" />
             </Anchor>,
             <EditOutlined key='edit' onClick={handleButtonClick} />,
-            <RemovePerson id={id} firstName={firstName} lastName={lastName} />
+            // <RemovePerson id={id} firstName={} lastName={lastName} />
           ]}
           style={styles.card}
         >
-          {fullName()}
+          {boatDetails()}
         </Card>
       )}
     </List.Item>

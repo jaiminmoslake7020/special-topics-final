@@ -1,6 +1,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import { GET_BOATS } from '../../queries'
+import { useParams } from "react-router-dom";
 
 import { List } from 'antd'
 
@@ -16,7 +17,12 @@ const getStyles = () => ({
 const BoatsByPerson = () => {
   const styles = getStyles()
 
-  const { loading, error, data } = useQuery(GET_BOATS)
+  let { id } = useParams();
+
+  let idString = id.toString();
+  const { loading, error, data } = useQuery(GET_BOATS , {
+    variables: { personId: idString },
+  } )
 
 
 
@@ -26,7 +32,7 @@ const BoatsByPerson = () => {
     <List grid={{ gutter: 20, column: 1 }} style={styles.list}>
       {data.boatsByPerson.map(({ id, year, make,  model, price , personId}) => (
         <List.Item key={id}>
-          {/*<Boat key={id} id={id} year={year} make={make} model={model} price={price} personId={personId} />*/}
+          <Boat key={id} id={id} year={year} make={make} model={model} price={price} personId={personId} />
         </List.Item>
       ))}
     </List>
